@@ -217,21 +217,42 @@ export const projects = [
 // Work / roles now live in the timeline above; this section shows achievements.
 export const experience = []
 
-// Achievements (rendered alongside Experience). Set to [] to hide.
+// Achievements. Set to [] to hide the section.
 export const certifications = [
   {
-    name: 'Winner — AxioML Hackathon 2026 (1st Prize)',
-    issuer: '₹10,000 · MED-Estation AI healthcare platform',
+    rank: '1st Place',
+    name: 'AxioML Hackathon 2026',
+    award: '₹10,000 Cash Prize',
+    project: 'MED-Estation — AI-Powered Pharmacy Intelligence',
+    host: 'Pratyusha Engineering College, Tamil Nadu',
+    scale: 'Won against 50+ external & 30+ internal teams',
+    summary:
+      'Built an AI-native pharmacy platform in a two-day national hackathon — demand forecasting, FEFO expiry management, OCR prescription intake, counterfeit-medicine detection, and a pharmacy-to-pharmacy expiry-exchange network. Judged best for real-world healthcare impact and innovation.',
+    tags: ['AI / ML', 'HealthTech', 'FastAPI', 'RAG'],
     year: '2026',
   },
   {
-    name: 'Winner — Visualize Hackathon 2026 (IoT)',
-    issuer: '₹7,000 · Smart ICU Monitoring System',
+    rank: '1st Place · IoT',
+    name: 'Visualize Hackathon 2026',
+    award: 'Trophy + ₹7,000 Cash Prize',
+    project: 'Smart ICU Monitoring System',
+    host: 'Sethu Institute of Technology, Tamil Nadu',
+    scale: 'Top IoT team — from 407 registered, 60 grand finalists',
+    summary:
+      'A 24-hour build: an AI-assisted ICU monitoring platform with a self-designed analog ECG front-end and multi-sensor vitals (ECG, SpO₂, heart rate, temperature) on ESP32 — streaming to a live multi-patient dashboard with AI anomaly detection and early-warning alerts.',
+    tags: ['IoT', 'ESP32', 'AI', 'Biomedical'],
     year: '2026',
   },
   {
-    name: 'Smart India Hackathon (SIH) — Level 2',
-    issuer: 'Qualified for Level 2',
+    rank: 'Level 2',
+    name: 'Smart India Hackathon (SIH)',
+    award: 'Qualified to Level 2',
+    project: 'National-Level Innovation Challenge',
+    host: 'Ministry of Education (Innovation Cell) & AICTE',
+    scale: "Cleared the institute round of India's largest hackathon",
+    summary:
+      "Advanced to Level 2 of the Smart India Hackathon — one of the world's largest open-innovation initiatives — by clearing the internal selection round with a problem-focused software solution and team pitch.",
+    tags: ['Innovation', 'Software', 'Teamwork'],
     year: '2025',
   },
 ]

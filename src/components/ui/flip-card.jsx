@@ -94,7 +94,7 @@ export default function FlipCard({ title, tagline, tech = [], description, repoU
             <h3 className="text-base font-bold text-white">{title}</h3>
           </div>
 
-          <p className="mt-4 flex-1 overflow-hidden text-sm leading-relaxed text-zinc-400">
+          <p className="mt-4 flex-1 overflow-hidden text-xs leading-relaxed text-zinc-400">
             {description}
           </p>
 

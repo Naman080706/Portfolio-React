@@ -1,12 +1,26 @@
-import { experience, certifications } from '../data.js'
+import { motion, useReducedMotion } from 'motion/react'
+import { certifications } from '../data.js'
 import useReveal from './useReveal.js'
+
+// Small inline trophy so the rank badge doesn't depend on an icon set.
+function Trophy() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+      <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+      <path d="M4 22h16" />
+      <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+      <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+      <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+    </svg>
+  )
+}
 
 export default function Experience() {
   useReveal()
+  const reduced = useReducedMotion()
 
-  const hasExp = experience && experience.length > 0
-  const hasCerts = certifications && certifications.length > 0
-  if (!hasExp && !hasCerts) return null
+  if (!certifications || certifications.length === 0) return null
 
   return (
     <section id="experience" className="section container">
@@ -14,45 +28,45 @@ export default function Experience() {
         <h2 className="section__title">Achievements</h2>
       </header>
 
-      <div className="xp">
-        {hasExp && (
-          <div className="xp__col">
-            {experience.map((e, i) => (
-              <div key={i} className="xp__item reveal">
-                <span className="xp__period">{e.period}</span>
-                <h3 className="xp__role">{e.role}</h3>
-                <span className="xp__company">{e.company}</span>
-                <ul className="xp__points">
-                  {e.points.map((pt, j) => (
-                    <li key={j}>{pt}</li>
-                  ))}
-                </ul>
-                {e.tags && (
-                  <ul className="xp__tags">
-                    {e.tags.map((t) => (
-                      <li key={t}>{t}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {hasCerts && (
-          <div className="xp__col">
-            <div className="certs reveal">
-              {certifications.map((c, i) => (
-                <div key={i} className="cert">
-                  <div className="cert__name">{c.name}</div>
-                  <div className="cert__meta">
-                    {c.issuer} · {c.year}
-                  </div>
-                </div>
-              ))}
+      <div className="achv">
+        {certifications.map((c, i) => (
+          <motion.article
+            key={c.name}
+            className="achv__card"
+            initial={reduced ? false : { opacity: 0, y: 40 }}
+            whileInView={reduced ? {} : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="achv__rank">
+              <Trophy />
+              {c.rank}
             </div>
-          </div>
-        )}
+
+            <div className="achv__head">
+              <h3 className="achv__title">{c.name}</h3>
+              <span className="achv__year">{c.year}</span>
+            </div>
+
+            {c.project && <div className="achv__project">{c.project}</div>}
+            <div className="achv__award">{c.award}</div>
+
+            <p className="achv__summary">{c.summary}</p>
+
+            <div className="achv__meta">
+              {c.host && <span>{c.host}</span>}
+              {c.scale && <span>{c.scale}</span>}
+            </div>
+
+            {c.tags && (
+              <ul className="achv__tags">
+                {c.tags.map((t) => (
+                  <li key={t}>{t}</li>
+                ))}
+              </ul>
+            )}
+          </motion.article>
+        ))}
       </div>
     </section>
   )

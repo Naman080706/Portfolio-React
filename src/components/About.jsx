@@ -43,7 +43,7 @@ export default function About() {
         </aside>
       </div>
 
-      <h3 className="timeline-title reveal">Timeline</h3>
+      <h3 id="timeline" className="timeline-title reveal">Timeline</h3>
       <Timeline />
     </section>
   )
