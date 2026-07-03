@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(node --version)",
+      "PowerShell(npm --version)",
+      "PowerShell(npm install 2>&1)",
+      "PowerShell(npm run build 2>&1)",
+      "PowerShell(npm run dev)",
+      "PowerShell(python --version 2>&1; py --version 2>&1; \\(Get-Command pdftotext -ErrorAction SilentlyContinue\\).Source)",
+      "Bash(pdftotext -layout \"C:/Users/Naman/Downloads/naman_resume_final.pdf\" -)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(python -c \"import rembg; print\\('rembg already installed'\\)\")",
+      "Bash(pip install *)",
+      "Bash(python -c ' *)",
+      "Bash(npm run *)",
+      "Bash(curl -s \"https://21st.dev/r/designali-in/shiny-button\")",
+      "PowerShell($p = Get-NetTCPConnection -LocalPort 5173 -State Listen -ErrorAction SilentlyContinue; if \\($p\\) { \"Port 5173 already in use by PID $\\($p.OwningProcess\\)\" } else { \"Port 5173 is free\" })",
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:5173/\" -UseBasicParsing -TimeoutSec 10; \"HTTP $\\($r.StatusCode\\) — serving $\\($r.RawContentLength\\) bytes\" } catch { \"Request failed: $\\($_.Exception.Message\\)\" })",
+      "PowerShell(npm install lucide-react 2>&1)",
+      "Bash(curl -s -L \"https://ieeetemsvit.in/\")",
+      "Bash(curl -s -L -o tems.png \"https://ieeetemsvit.in/logo192.png\")",
+      "PowerShell($p = Get-NetTCPConnection -LocalPort 5173 -State Listen -ErrorAction SilentlyContinue; if \\($p\\) { \"5173 in use by PID $\\($p.OwningProcess\\) \\($\\(\\(Get-Process -Id $p.OwningProcess\\).ProcessName\\)\\)\" } else { \"5173 free\" })",
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:5173/\" -UseBasicParsing -TimeoutSec 10; \"HTTP $\\($r.StatusCode\\) OK\" } catch { \"Failed: $\\($_.Exception.Message\\)\" })",
+      "PowerShell(Start-Sleep -Seconds 2; try { \\(Invoke-WebRequest -Uri \"http://localhost:5173/\" -UseBasicParsing -TimeoutSec 8\\).StatusCode } catch { \"not up yet: $\\($_.Exception.Message\\)\" })",
+      "PowerShell(Start-Sleep -Seconds 2; try { \\(Invoke-WebRequest -Uri \"http://localhost:5173/\" -UseBasicParsing -TimeoutSec 8\\).StatusCode } catch { \"starting: $\\($_.Exception.Message\\)\" })",
+      "Bash(npm install *)",
+      "Bash(curl -s -w '\\\\nHTTP_STATUS:%{http_code}\\\\n' -X POST https://api.emailjs.com/api/v1.0/email/send -H 'Content-Type: application/json' -d '{ *)",
+      "Bash(git --version)",
+      "Bash(gh auth *)",
+      "Bash(git config *)",
+      "Bash(git init *)",
+      "Bash(git check-ignore *)",
+      "Bash(git add *)",
+      "Bash(grep -E \"\\\\.env$|\\\\.env\\\\.\")",
+      "Bash(grep \"\\\\.env$\")"
+    ]
+  }
+}
