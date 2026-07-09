@@ -35,6 +35,7 @@
   --max: 1120px;
 }
 
+
 [data-theme='light'] {
   --bg: #f6f8fc;
   --bg-soft: #ffffff;
@@ -226,12 +227,12 @@
   pointer-events: auto;
   white-space: nowrap;
   font-family: ui-monospace, 'Cascadia Code', 'JetBrains Mono', Consolas, monospace;
-  font-size: 0.95rem;
   letter-spacing: 0.02em;
   text-transform: lowercase;
   color: #8a8b93;
   padding: 4px 2px;
   cursor: pointer;
+  font-size: clamp(0.8rem, 1vw, 0.95rem);
   transition: color 0.3s ease, text-shadow 0.3s ease;
   animation: heroNavIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -251,15 +252,15 @@
 .hero-nav__item:hover .hero-nav__bracket:first-child { transform: translateX(-5px); }
 .hero-nav__item:hover .hero-nav__bracket:last-child { transform: translateX(5px); }
 
-/* Scatter across empty grid cells (all offsets are multiples of 66px so the
-   boxes lock onto the background grid lines). */
-.hn--about      { top: 198px; left: 66px; }
-.hn--projects   { top: 198px; right: 132px; }
-.hn--timeline   { top: 330px; left: 198px; }
-.hn--experience { top: 330px; right: 330px; }
-.hn--skills     { top: 462px; left: 66px; }
-/* Sits low and right-of-center — in the gap between the photo and the email button. */
-.hn--contact    { top: auto; left: auto; bottom: 96px; right: 330px; }
+/* Scatter across the hero using percentages so the links scale fluidly with
+   the viewport (no fixed pixels) — they stay near the edges, clear of the
+   centered name and photo, at any width or height. */
+.hn--about      { top: 28%; left: 4%; }
+.hn--projects   { top: 28%; right: 8%; }
+.hn--timeline   { top: 43%; left: 12%; }
+.hn--experience { top: 43%; right: 16%; }
+.hn--skills     { top: 58%; left: 4%; }
+.hn--contact    { top: 58%; right: 8%; }
 
 @keyframes heroNavIn {
   from { opacity: 0; transform: translateY(10px); filter: blur(4px); }
@@ -474,33 +475,79 @@
 .landing__info .shiny-cta { padding: 0.8rem 1.4rem; font-size: 0.9rem; }
 .landing__info .shiny-cta span { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
 
-@media (max-width: 820px) {
+/* Tablet / phone: the scattered nav collapses into a wrapped top row and the
+   hero stacks cleanly. Everything uses fluid units (vw / clamp / max) so it
+   scales smoothly across the whole range below this one standard breakpoint. */
+@media (max-width: 768px) {
   .landing__links { display: none; }
-  .landing__name { top: 16%; font-size: clamp(2.6rem, 16vw, 5rem); }
-  .landing__photo { height: 62%; }
-  .landing__info { max-width: 48%; left: 16px; bottom: 16px; }
-  .landing__desc { display: none; }
-  .landing__quip { display: none; }
+  .landing__desc, .landing__quip { display: none; }
 
-  /* Scattered nav collapses into a tidy, touch-friendly wrapped row up top,
-     clear of the centered name and photo. */
+  /* Nav: wrapped, centered row pinned to the very top. */
+  /* Nav: wrapped, centered row pinned to the very top. */
   .hero-nav {
+    position: absolute;
     inset: 10px 8px auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 6px;
+    gap: 5px 6px;
     pointer-events: auto;
   }
   .hero-nav__item {
     position: static;
     inset: auto;
-    font-size: 0.72rem;
-    padding: 4px 8px;
+    font-size: clamp(0.55rem, 2.7vw, 0.72rem);
+    padding: 4px 7px;
     animation: none;
   }
-  .landing__socials { right: 16px; bottom: 16px; gap: 8px; }
-  .landing__social { padding: 8px 12px; font-size: 0.78rem; }
+
+  /* Everything under the nav becomes one centered column, so no button ever
+     overlaps the photo. Order: social buttons → name → role, photo at bottom. */
+  .landing__stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 104px 16px 0;
+  }
+  .landing__socials {
+    position: static;
+    order: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    max-width: 100%;
+    gap: 8px;
+  }
+  .landing__socials .shiny-cta {
+    width: auto;
+    padding: 0.5rem 0.85rem;
+    font-size: clamp(0.72rem, 2.6vw, 0.82rem);
+  }
+  .landing__name {
+    position: static;
+    order: 2;
+    top: auto; left: auto; right: auto;
+    margin-top: 20px;
+    font-size: clamp(2rem, 12vw, 4rem);
+  }
+  .landing__info {
+    position: static;
+    order: 3;
+    left: auto; bottom: auto;
+    max-width: none;
+    margin-top: 12px;
+    align-items: center;
+  }
+  .landing__role { font-size: clamp(0.85rem, 3.6vw, 1.15rem); white-space: normal; }
+  .landing__photo { position: absolute; bottom: 0; left: 50%; height: min(60%, calc(100vh - 315px)); }
+
+  /* Center the section content on mobile */
+  .about-col { align-items: center; text-align: center; }
+  .about-text, .about-greeting { text-align: center; }
+  .contact { justify-items: center; }
 }
 
 /* ============================================================ LANDING ANIMATIONS */

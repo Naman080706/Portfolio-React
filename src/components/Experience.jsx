@@ -49,7 +49,7 @@ export default function Experience() {
             </div>
 
             {c.project && <div className="achv__project">{c.project}</div>}
-            <div className="achv__award">{c.award}</div>
+            {c.award && <div className="achv__award">{c.award}</div>}
 
             <p className="achv__summary">{c.summary}</p>
 

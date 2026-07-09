@@ -147,7 +147,7 @@ export const skills = [
 export const projects = [
   {
     title: 'IEEE TEMS Website',
-    tagline: 'Official chapter & event platform',
+    tagline: 'Official chapter & event site',
     description:
       'The official website for IEEE TEMS, VIT Vellore. Led the frontend build — event listings, registrations, and a fast, responsive UI used by the chapter and its events.',
     tags: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
@@ -158,7 +158,7 @@ export const projects = [
   },
   {
     title: 'FloatChat — AI ARGO Ocean Data Analytics',
-    tagline: 'Chat with ocean data, powered by RAG',
+    tagline: 'Chat with ocean data',
     description:
       'A RAG-based conversational analytics platform for ARGO ocean datasets. Processed 6,500+ NetCDF files into a compressed SQLite database optimized for 16GB RAM systems, with FastAPI REST APIs and interactive geospatial dashboards.',
     tags: ['Python', 'FastAPI', 'Streamlit', 'SQLite', 'FAISS', 'RAG'],
@@ -202,13 +202,13 @@ export const projects = [
   },
   {
     title: 'Smart ICU Monitoring System',
-    tagline: 'IoT monitoring for critical care',
+    tagline: 'ECG + patient digital twins',
     description:
-      'An IoT-based smart ICU monitoring system that won the Visualize Hackathon 2026 (IoT category, ₹7,000 cash prize).',
-    tags: ['IoT', 'Hardware', 'Monitoring'],
+      'An analog neuromorphic cyber-physical ICU system: an ECG spike-encoding hardware front-end on ESP32-S3 with sub-2ms edge inference, fused with adaptive per-patient digital twins that lift beat-classification accuracy from 93.6% to 97.8% and cut false alarms by 64%.',
+    tags: ['ESP32-S3', 'FastAPI', 'React / Vite', 'Neuromorphic', 'Digital Twin'],
     image: '',
     liveUrl: '',
-    repoUrl: '',
+    repoUrl: 'https://github.com/Naman080706/Smart-ICU-Monitoring-System',
     featured: false,
   },
 ]
@@ -222,7 +222,6 @@ export const certifications = [
   {
     rank: '1st Place',
     name: 'AxioML Hackathon 2026',
-    award: '₹10,000 Cash Prize',
     project: 'MED-Estation — AI-Powered Pharmacy Intelligence',
     host: 'Pratyusha Engineering College, Tamil Nadu',
     scale: 'Won against 50+ external & 30+ internal teams',
@@ -234,7 +233,6 @@ export const certifications = [
   {
     rank: '1st Place · IoT',
     name: 'Visualize Hackathon 2026',
-    award: 'Trophy + ₹7,000 Cash Prize',
     project: 'Smart ICU Monitoring System',
     host: 'Sethu Institute of Technology, Tamil Nadu',
     scale: 'Top IoT team — from 407 registered, 60 grand finalists',
@@ -246,7 +244,6 @@ export const certifications = [
   {
     rank: 'Level 2',
     name: 'Smart India Hackathon (SIH)',
-    award: 'Qualified to Level 2',
     project: 'National-Level Innovation Challenge',
     host: 'Ministry of Education (Innovation Cell) & AICTE',
     scale: "Cleared the institute round of India's largest hackathon",

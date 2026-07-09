@@ -53,12 +53,15 @@ export default function FlipCard({ title, tagline, tech = [], description, repoU
               <FolderGit2 className="h-6 w-6 text-black" />
             </div>
 
-            {/* title + tagline + tech, vertically centered in the remaining space */}
-            <div className="flex flex-1 flex-col justify-center gap-3">
+            {/* The orange tagline + tech sit at a fixed offset so they align
+               across every card; the title fills a fixed-height box above and
+               is bottom-aligned, so it always sits right on top of the orange
+               line (growing upward for longer names). */}
+            <div className="mt-4 flex flex-1 flex-col justify-start gap-3">
               <div className="space-y-1.5">
-                <h3 className="text-2xl font-bold leading-tight text-white">{title}</h3>
+                <h3 className="flex min-h-[5.6rem] items-end text-2xl font-bold leading-tight text-white">{title}</h3>
                 {tagline && (
-                  <p className="text-sm font-medium leading-snug text-orange-300/90">{tagline}</p>
+                  <p className="line-clamp-1 text-sm font-medium leading-snug text-orange-300/90">{tagline}</p>
                 )}
               </div>
               <div className="flex flex-wrap gap-2">
