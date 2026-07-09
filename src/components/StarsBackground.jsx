@@ -47,12 +47,17 @@ export default function StarsBackground({ speed = 50, starColor = '#ffffff', fac
     return () => window.removeEventListener('mousemove', onMove)
   }, [factor])
 
+  // Far fewer stars on phones — thousands of box-shadows are expensive to paint.
+  const mobile =
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
+  const counts = mobile ? [300, 120, 60] : [1000, 400, 200]
+
   return (
     <div className="stars-bg" aria-hidden="true">
       <div className="stars-parallax" ref={parallaxRef}>
-        <StarLayer count={1000} size={1} duration={speed} color={starColor} />
-        <StarLayer count={400} size={2} duration={speed * 2} color={starColor} />
-        <StarLayer count={200} size={3} duration={speed * 3} color={starColor} />
+        <StarLayer count={counts[0]} size={1} duration={speed} color={starColor} />
+        <StarLayer count={counts[1]} size={2} duration={speed * 2} color={starColor} />
+        <StarLayer count={counts[2]} size={3} duration={speed * 3} color={starColor} />
       </div>
     </div>
   )

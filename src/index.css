@@ -35,6 +35,81 @@
   --max: 1120px;
 }
 
+/* ============================================================ PRELOADER
+   Holds a loading screen until the page is fully ready, then reveals the
+   finished UI as one unit. */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: grid;
+  place-items: center;
+  background: #000000;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+.preloader--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.preloader__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: min(300px, 72vw);
+}
+.preloader__mark {
+  display: flex;
+  gap: 0.28em;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.5rem, 6vw, 2.1rem);
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+.preloader__mark-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.2px #ffffff;
+}
+.preloader__mark-solid { color: #ffffff; }
+.preloader__bar {
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+.preloader__fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(249, 115, 22, 0.75);
+  transition: width 0.15s linear;
+}
+.preloader__pct {
+  font-family: ui-monospace, 'JetBrains Mono', Consolas, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* lock scroll and pause entrance animations while loading, so they play
+   together once the loader lifts (the preloader itself uses no CSS animation) */
+body.is-loading { overflow: hidden; }
+body.is-loading * { animation-play-state: paused !important; }
+
+/* ============================================================ MOBILE PERF
+   backdrop-filter blur is very cheap to declare but very expensive to repaint
+   on every scroll frame on phones. Drop it on small screens — the glass panels
+   keep their translucent background, just without the (barely visible) blur. */
+@media (max-width: 768px) {
+  *, *::before, *::after {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
 
 [data-theme='light'] {
   --bg: #f6f8fc;

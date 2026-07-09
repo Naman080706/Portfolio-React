@@ -125,6 +125,10 @@ export default function Particles({ className = '' }) {
   }, [])
 
   useEffect(() => {
+    // Skip the whole particle system on touch / small screens — the canvas
+    // spans the entire (very tall) scroll card, so the per-frame redraw is a
+    // major cause of mobile lag. The canvas simply stays blank there.
+    if (window.matchMedia('(pointer: coarse), (max-width: 768px)').matches) return
     const cleanup = init()
     return cleanup
   }, [init])

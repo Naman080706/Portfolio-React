@@ -1,3 +1,4 @@
+import Preloader from './components/Preloader.jsx'
 import StarsBackground from './components/StarsBackground.jsx'
 import HeroLanding from './components/HeroLanding.jsx'
 import About from './components/About.jsx'
@@ -10,6 +11,7 @@ import ContainerScroll from './components/ContainerScroll.jsx'
 export default function App() {
   return (
     <>
+      <Preloader />
       <StarsBackground />
       <HeroLanding />
       <main>

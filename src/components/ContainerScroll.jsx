@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'motion/react'
 import Particles from './Particles.jsx'
 
@@ -7,6 +7,13 @@ import Particles from './Particles.jsx'
 export default function ContainerScroll({ titleComponent, children }) {
   const ref = useRef(null)
   const reduced = useReducedMotion()
+
+  // On phones, skip the scroll-linked 3D tilt entirely — a promoted 3D layer
+  // that re-transforms on every scroll frame is a big cause of scroll jank.
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    setIsMobile(window.matchMedia('(max-width: 768px)').matches)
+  }, [])
 
   // Flatten quickly as the card's top enters (works for a very long card).
   const { scrollYProgress } = useScroll({
@@ -32,7 +39,11 @@ export default function ContainerScroll({ titleComponent, children }) {
         )}
         <motion.div
           className="cscroll__card"
-          style={{ rotateX, scale, transformPerspective: 3500, transformOrigin: 'center top' }}
+          style={
+            isMobile
+              ? undefined
+              : { rotateX, scale, transformPerspective: 3500, transformOrigin: 'center top' }
+          }
         >
           <div className="cscroll__card-inner">
             <Particles />
