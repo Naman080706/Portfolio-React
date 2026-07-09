@@ -208,7 +208,7 @@ export const projects = [
     tags: ['ESP32-S3', 'FastAPI', 'React / Vite', 'Neuromorphic', 'Digital Twin'],
     image: '',
     liveUrl: '',
-    repoUrl: 'https://github.com/Naman080706/Smart-ICU-Monitoring-System',
+    repoUrl: 'https://github.com/Naman080706/Smart-ICU-Monitoring-System-',
     featured: false,
   },
 ]
