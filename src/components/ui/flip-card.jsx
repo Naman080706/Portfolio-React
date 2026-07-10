@@ -10,11 +10,17 @@ import { Icon } from '../Icons.jsx'
 export default function FlipCard({ title, tagline, tech = [], description, repoUrl, index = 0 }) {
   const [isFlipped, setIsFlipped] = useState(false)
   const [activating, setActivating] = useState(false)
+  // On touch devices hover is unreliable (a tap emulates hover), so flip on
+  // explicit tap instead; desktop keeps the hover-to-flip behaviour.
+  const [isTouch] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(hover: none), (pointer: coarse)').matches,
+  )
   const isRepo = repoUrl && repoUrl.includes('github.com')
 
   // Play the button's light-up animation, then redirect.
   const handleActivate = (e) => {
     e.preventDefault()
+    e.stopPropagation() // don't let the tap bubble up and flip the card back
     if (!repoUrl || activating) return
     setActivating(true)
     setTimeout(() => {
@@ -23,11 +29,27 @@ export default function FlipCard({ title, tagline, tech = [], description, repoU
     }, 750)
   }
 
+  const flipProps = isTouch
+    ? {
+        onClick: () => setIsFlipped((f) => !f),
+        role: 'button',
+        tabIndex: 0,
+        onKeyDown: (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            setIsFlipped((f) => !f)
+          }
+        },
+      }
+    : {
+        onMouseEnter: () => setIsFlipped(true),
+        onMouseLeave: () => setIsFlipped(false),
+      }
+
   return (
     <div
-      className="group relative h-[360px] w-full max-w-[320px] [perspective:2000px]"
-      onMouseEnter={() => setIsFlipped(true)}
-      onMouseLeave={() => setIsFlipped(false)}
+      className="group relative h-[360px] w-full max-w-[320px] select-none [perspective:2000px]"
+      {...flipProps}
     >
       <div
         className={cn(
@@ -77,7 +99,7 @@ export default function FlipCard({ title, tagline, tech = [], description, repoU
             </div>
 
             <div className="flex items-center justify-between border-t border-white/10 pt-3">
-              <span className="text-xs font-medium text-zinc-400">View details</span>
+              <span className="text-xs font-medium text-zinc-400">{isTouch ? 'Tap to view' : 'View details'}</span>
               <ArrowUpRight className="h-4 w-4 text-orange-400 transition-transform duration-300 group-hover:translate-x-0.5" />
             </div>
           </div>
