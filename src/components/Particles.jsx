@@ -16,8 +16,12 @@ export default function Particles({ className = '' }) {
     let w = (canvas.width = canvas.parentElement.offsetWidth)
     let h = (canvas.height = canvas.parentElement.offsetHeight)
 
-    const PARTICLE_COUNT = 180
-    const MAX_LINK_DIST = 160
+    // Far fewer particles on phones so the per-frame O(n²) link pass stays cheap
+    // and scrolling/tapping stays smooth.
+    const isMobile = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches
+    const isTouch = window.matchMedia('(pointer: coarse)').matches
+    const PARTICLE_COUNT = isMobile ? 45 : 180
+    const MAX_LINK_DIST = isMobile ? 120 : 160
     const MOUSE_GRAB_DIST = 240
     const SPEED = 0.45
 
@@ -102,9 +106,12 @@ export default function Particles({ className = '' }) {
     }
 
     // Listen on the card container so hover works even over section content
+    // (skip on touch — there's no cursor and it saves work)
     const container = canvas.parentElement
-    container.addEventListener('mousemove', onMouseMove)
-    container.addEventListener('mouseleave', onMouseLeave)
+    if (!isTouch) {
+      container.addEventListener('mousemove', onMouseMove)
+      container.addEventListener('mouseleave', onMouseLeave)
+    }
 
     const onResize = () => {
       w = canvas.width = canvas.parentElement.offsetWidth
@@ -125,10 +132,6 @@ export default function Particles({ className = '' }) {
   }, [])
 
   useEffect(() => {
-    // Skip the whole particle system on touch / small screens — the canvas
-    // spans the entire (very tall) scroll card, so the per-frame redraw is a
-    // major cause of mobile lag. The canvas simply stays blank there.
-    if (window.matchMedia('(pointer: coarse), (max-width: 768px)').matches) return
     const cleanup = init()
     return cleanup
   }, [init])

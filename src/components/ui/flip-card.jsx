@@ -7,8 +7,20 @@ import { Icon } from '../Icons.jsx'
 
 // Flip card for a project: front shows title + tech stack, hover flips to the
 // back which shows the description + a centered repo button.
-export default function FlipCard({ title, tagline, tech = [], description, repoUrl, index = 0 }) {
-  const [isFlipped, setIsFlipped] = useState(false)
+// `isFlipped` and the on* handlers are controlled by the parent so only one
+// card can ever be open at a time.
+export default function FlipCard({
+  title,
+  tagline,
+  tech = [],
+  description,
+  repoUrl,
+  index = 0,
+  isFlipped = false,
+  onEnter,
+  onLeave,
+  onToggle,
+}) {
   const [activating, setActivating] = useState(false)
   // On touch devices hover is unreliable (a tap emulates hover), so flip on
   // explicit tap instead; desktop keeps the hover-to-flip behaviour.
@@ -31,19 +43,19 @@ export default function FlipCard({ title, tagline, tech = [], description, repoU
 
   const flipProps = isTouch
     ? {
-        onClick: () => setIsFlipped((f) => !f),
+        onClick: () => onToggle?.(),
         role: 'button',
         tabIndex: 0,
         onKeyDown: (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
-            setIsFlipped((f) => !f)
+            onToggle?.()
           }
         },
       }
     : {
-        onMouseEnter: () => setIsFlipped(true),
-        onMouseLeave: () => setIsFlipped(false),
+        onMouseEnter: () => onEnter?.(),
+        onMouseLeave: () => onLeave?.(),
       }
 
   return (

@@ -975,20 +975,6 @@ button { font: inherit; cursor: pointer; }
   overflow: hidden;
   background: #020712;
 }
-/* Mobile: the animated particle canvas is disabled for performance, so give the
-   card a lightweight *static* backdrop (soft glows + faint star dots) — no
-   repaint, no lag, but it's no longer a flat black panel. */
-@media (max-width: 768px) {
-  .cscroll__card-inner {
-    background-color: #020712;
-    background-image:
-      radial-gradient(75% 42% at 50% 0%, rgba(249, 115, 22, 0.08), transparent 72%),
-      radial-gradient(55% 40% at 85% 100%, rgba(59, 130, 246, 0.06), transparent 72%),
-      radial-gradient(circle, rgba(255, 255, 255, 0.09) 1px, transparent 1.3px);
-    background-size: 100% 100%, 100% 100%, 30px 30px;
-    background-attachment: scroll;
-  }
-}
 /* Particle canvas sits behind all section content */
 .particles-canvas {
   position: absolute;
