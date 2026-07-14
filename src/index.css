@@ -1360,7 +1360,6 @@ button { font: inherit; cursor: pointer; }
   width: 68px;
   height: 68px;
   user-select: none;
-  touch-action: none;
 }
 .skill-icon-wrap {
   width: 68px;

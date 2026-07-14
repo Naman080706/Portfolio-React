@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { skills } from '../data.js'
 import useReveal from './useReveal.js'
 
@@ -216,10 +216,7 @@ export default function Skills() {
   useReveal()
   const [activeFolder, setActiveFolder] = useState(null)
   const [hoveredFolder, setHoveredFolder] = useState(null)
-  const [positions, setPositions] = useState({}) // Store dragged coordinates
-  const [draggedSkill, setDraggedSkill] = useState(null)
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1000)
-  const folderRefs = useRef([])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -237,80 +234,7 @@ export default function Skills() {
   }
 
   const toggleFolder = (index) => {
-    if (activeFolder === index) {
-      // Toggle off
-      setActiveFolder(null)
-      setPositions({})
-    } else {
-      setActiveFolder(index)
-      setPositions({})
-    }
-  }
-
-  // Handle manual coordinate dragging for popped-out items
-  const startDrag = (skillName, e) => {
-    e.preventDefault()
-    const isTouch = e.type === 'touchstart'
-    const startX = isTouch ? e.touches[0].clientX : e.clientX
-    const startY = isTouch ? e.touches[0].clientY : e.clientY
-
-    const currentPos = positions[skillName] || { x: 0, y: 0 }
-    setDraggedSkill(skillName)
-
-    const onMove = (moveEv) => {
-      const isMoveTouch = moveEv.type === 'touchmove'
-      const clientX = isMoveTouch ? moveEv.touches[0].clientX : moveEv.clientX
-      const clientY = isMoveTouch ? moveEv.touches[0].clientY : moveEv.clientY
-
-      const deltaX = clientX - startX
-      const deltaY = clientY - startY
-
-      setPositions((prev) => ({
-        ...prev,
-        [skillName]: {
-          x: currentPos.x + deltaX,
-          y: currentPos.y + deltaY,
-        },
-      }))
-    }
-
-    const onEnd = () => {
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mouseup', onEnd)
-      window.removeEventListener('touchmove', onMove)
-      window.removeEventListener('touchend', onEnd)
-
-      // Check if item is dragged back inside the active folder bounding area
-      if (activeFolder !== null) {
-        const folderEl = folderRefs.current[activeFolder]
-        if (folderEl) {
-          const folderRect = folderEl.getBoundingClientRect()
-          // Get the current position of the dragged element
-          const itemEl = document.getElementById(`skill-node-${skillName}`)
-          if (itemEl) {
-            const itemRect = itemEl.getBoundingClientRect()
-            // Check if coordinates overlap the folder container
-            const overlaps = !(
-              itemRect.right < folderRect.left ||
-              itemRect.left > folderRect.right ||
-              itemRect.bottom < folderRect.top ||
-              itemRect.top > folderRect.bottom
-            )
-            if (overlaps) {
-              // RESET: All icons animate back to folder
-              setActiveFolder(null)
-              setPositions({})
-            }
-          }
-        }
-      }
-      setDraggedSkill(null)
-    }
-
-    window.addEventListener('mousemove', onMove)
-    window.addEventListener('mouseup', onEnd)
-    window.addEventListener('touchmove', onMove)
-    window.addEventListener('touchend', onEnd)
+    setActiveFolder((cur) => (cur === index ? null : index))
   }
 
   return (
@@ -340,7 +264,6 @@ export default function Skills() {
           return (
             <div
               key={group.category}
-              ref={(el) => (folderRefs.current[index] = el)}
               className={folderClass}
               style={transformStyle}
               onMouseEnter={() => handleFolderMouseEnter(index)}
@@ -387,7 +310,6 @@ export default function Skills() {
               {isActive && (
                 <div className="popped-icons-overlay" onClick={(e) => e.stopPropagation()}>
                   {group.items.map((item, itemIdx) => {
-                    const dragOffset = positions[item.name] || { x: 0, y: 0 }
                     // Arrange in centered rows above the folder so they stay within
                     // the folder's column and don't overlap neighbours.
                     const totalItems = group.items.length
@@ -416,20 +338,16 @@ export default function Skills() {
                       width: `${iconSize}px`,
                       height: `${iconSize}px`,
                       // Shift left/top by half icon size for perfect centering
-                      transform: `translate(${initialX - halfSize + dragOffset.x}px, ${initialY - halfSize + dragOffset.y}px)`,
+                      transform: `translate(${initialX - halfSize}px, ${initialY - halfSize}px)`,
                       animationDelay: `${itemIdx * 0.05}s`,
-                      zIndex: draggedSkill === item.name ? 100 : 50,
-                      cursor: draggedSkill === item.name ? 'grabbing' : 'grab',
+                      zIndex: 50,
                     }
 
                     return (
                       <div
-                        id={`skill-node-${item.name}`}
                         key={item.name}
                         className="popped-skill-node tooltip-container"
                         style={nodeStyle}
-                        onMouseDown={(e) => startDrag(item.name, e)}
-                        onTouchStart={(e) => startDrag(item.name, e)}
                       >
                         <div
                           className="skill-icon-wrap"

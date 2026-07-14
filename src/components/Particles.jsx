@@ -132,6 +132,10 @@ export default function Particles({ className = '' }) {
   }, [])
 
   useEffect(() => {
+    // Skip the particle system on touch / small screens — the canvas spans the
+    // entire very tall scroll card, so the per-frame redraw lags the Skills
+    // section on phones. The card just uses its flat background there.
+    if (window.matchMedia('(pointer: coarse), (max-width: 768px)').matches) return
     const cleanup = init()
     return cleanup
   }, [init])
